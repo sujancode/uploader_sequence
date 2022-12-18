@@ -1,7 +1,6 @@
 from seleniumwire import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 import random
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 import os
 import shutil
@@ -44,9 +43,6 @@ def getSeleniumBrowserAutomation():
     chrome_options.add_argument("--single-process")
     chrome_options.binary_location = '/opt/chromium/chrome'
     
-    caps = DesiredCapabilities().CHROME
-    caps["pageLoadStrategy"] = "none"   # Do not wait for full page load
-
 
 
     # proxy =  get_proxies()
@@ -54,7 +50,7 @@ def getSeleniumBrowserAutomation():
 
     # chrome_options.add_argument(f"--load-extension={proxy_extension.directory}")
 
-    driver = webdriver.Chrome(options=chrome_options,executable_path='/opt/chromedriver/chromedriver',desired_capabilities=caps)
+    driver = webdriver.Chrome(options=chrome_options,executable_path='/opt/chromedriver/chromedriver')
 
     print(driver.session_id)
 
