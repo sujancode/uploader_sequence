@@ -50,7 +50,7 @@ def getSeleniumBrowserAutomation():
 
     # chrome_options.add_argument(f"--load-extension={proxy_extension.directory}")
 
-    driver = webdriver.Chrome(options=chrome_options,executable_path='/opt/chromedriver/chromedriver')
+    driver = webdriver.Chrome(options=chrome_options,executable_path='/opt/chromedriver/chromedriver',version_main=105)
 
     print(driver.session_id)
 
