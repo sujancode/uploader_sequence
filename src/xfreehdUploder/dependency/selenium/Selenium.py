@@ -1,4 +1,4 @@
-import seleniumwire.undetected_chromedriver as webdriver
+from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 import random
 
@@ -30,7 +30,7 @@ def getSeleniumBrowserAutomation():
     # chrome_options.add_experimental_option('useAutomationExtension', False)
 
     
-    chrome_options.add_argument('--headless')
+    # chrome_options.add_argument('--headless')
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--disable-gpu")
@@ -50,7 +50,7 @@ def getSeleniumBrowserAutomation():
 
     # chrome_options.add_argument(f"--load-extension={proxy_extension.directory}")
 
-    driver = webdriver.Chrome(options=chrome_options,executable_path='/opt/chromedriver/chromedriver',version_main=105)
+    driver = webdriver.Chrome(options=chrome_options,executable_path='/opt/chromedriver/chromedriver')
 
     print(driver.session_id)
 
