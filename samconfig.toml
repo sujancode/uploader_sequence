@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "video-uloder"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1ob8oq4jxr4el"
+s3_prefix = "video-uloder"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+image_repositories = ["VideoUploderFunction=573446541341.dkr.ecr.us-east-1.amazonaws.com/videouloderc660e436/videouploderfunction55b178bdrepo"]

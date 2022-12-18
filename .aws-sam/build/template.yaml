@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Video Uploder
+Resources:
+  VideoUploderApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+  VideoUploderFunction:
+    Type: AWS::Serverless::Function
+    Description: Upload Video
+    Properties:
+      PackageType: Image
+      Timeout: 900
+      MemorySize: 2048
+      Events:
+        CreateApi:
+          Type: Api
+          Properties:
+            Path: /send
+            Method: POST
+            RestApiId:
+              Ref: VideoUploderApi
+      ImageUri: videouploderfunction:python3.8
+    Metadata:
+      DockerContext: /media/sujan/0E8458457CE53A28/codes/video_concat/lambda/src/videoUploader
+      DockerTag: python3.8
+      Dockerfile: Dockerfile
+      SamResourceId: VideoUploderFunction
