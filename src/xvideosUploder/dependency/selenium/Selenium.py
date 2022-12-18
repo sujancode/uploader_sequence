@@ -1,4 +1,4 @@
-from seleniumwire import webdriver
+import undetected_chromedriver as webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 import random
 
