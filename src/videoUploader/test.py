@@ -16,7 +16,6 @@ while True:
             video_file.write(res.content)
         sign_up(video_url=data["url"],title=data['title'],tags=data['tags'])
         # result=subprocess.run(["nordvpn","c","united_states"])
-        print(result)
     except Exception as e:
         print(e)
 
