@@ -7,7 +7,9 @@ while True:
     try:
         db=getDatabaseWrapperInstance("created_video")
         video_list=db.find_all(collection="videos")
-        data=random.choice(video_list)
+        rand_index=random.randint(0,len(video_list))
+        data=video_list[rand_index]
+        print(data,rand_index)
         res=requests.get(data["url"])
         with open("./data/tmp.mp4","wb") as video_file:
             video_file.write(res.content)

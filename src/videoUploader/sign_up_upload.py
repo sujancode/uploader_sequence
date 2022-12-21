@@ -69,7 +69,7 @@ def upload(browser,url,video_url,title,tags,username,password):
             element.send_keys(t)
             element.send_keys(Keys.ENTER)
         browser.execute_script('''items=document.querySelectorAll("#category_list label");for(var item of items){item.click()};''')
-        sleep(30)
+        sleep(60)
 
         browser.find_element(By.ID,"upload_form_button").click()
         db=getDatabaseWrapperInstance(table_name="spankbang_account")
@@ -77,8 +77,7 @@ def upload(browser,url,video_url,title,tags,username,password):
             "username":username,
             "password":password,
             "video":video_url,
-            "tags":tags,
-            "from":"local"
+            "tags":tags
         })
         print("UPLOADD Complete")
     except Exception as e:

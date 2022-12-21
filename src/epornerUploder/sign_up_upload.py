@@ -4,15 +4,15 @@ from selenium.webdriver.common.by import By
 from string import ascii_letters
 import random
 from dependency.faker.Faker import getFakerInstance
-from dependency.database.index import getDatabaseWrapperInstance
-from dependency.captchaResolver.index import getTextToSpeechCaptchaResolver
 import time
-from dependency.captchaResolver.index import getTextToSpeechCaptchaResolver
 import os
+from selenium.webdriver.common.keys import Keys
+from temp_mail import get_activation_link,get_email
+
 BASE_DIR=os.path.dirname(os.path.realpath(__file__))
 
 def getRandomString(length):
-    return ''.join(random.choice(ascii_letters+"1234567890") for i in range(length))
+    return ''.join(random.choice(ascii_letters) for i in range(length))
 
 def getRandomEmail():
     faker=getFakerInstance()
@@ -46,36 +46,18 @@ def upload(browser,url,video_url,title,tags):
         browser.execute_script(''' document.querySelector("#typehome").click()''')
         time.sleep(1)
         browser.execute_script('''document.querySelector("#upformsubmitbtn").click() ''')
+        print("UPLOADED")
         time.sleep(60)
     except Exception as e:
         print(e)
 
 def get_temp_email(browser):
-    browser.get("https://mail.tm/en/")
-    time.sleep(2)
-    # captcha_solver=getTextToSpeechCaptchaResolver(browserWrapper=browser)
-    # googleClass=browser.find_elements(By.CSS_SELECTOR,"[title=reCAPTCHA]")
+    return get_email()
 
-    # if len(googleClass)>0:
-    #     captcha_solver.resolve()
-    #     sleep(2)
-    #     browser.switch_to.parent_frame()   
-    email=browser.execute_script(''' return document.querySelector("#DontUseWEBuseAPI").value ''')
-    return email
-
-def email_activation(browser):
+def email_activation(email):
     try:
-        browser.get("https://mail.tm/en/")
-        time.sleep(4)
-        browser.execute_script(''' document.querySelector(".divide-y a").click() ''')
-        time.sleep(4)
-        iframe=browser.find_element(By.CSS_SELECTOR,"main iframe")
-        browser.switch_to.frame(iframe)
-        time.sleep(1)
-        browser.execute_script('''document.querySelector('[href^="https://www.xfreehd.com/confirm?"]').click()''')
-        time.sleep(2)
-
-        browser.switch_to.default_content()
+        link=get_activation_link(email)
+        return link
     except Exception as e:
         print(e)
 
@@ -83,6 +65,7 @@ def login(browser,username,password):
     browser.get("https://www.eporner.com/login")
     browser.set_window_size(955, 1095)
 
+    browser.execute_script('''EP.footer.closeAgeVerif();''')
     browser.find_element(By.CSS_SELECTOR, '[name="login"]').click()
     browser.find_element(By.CSS_SELECTOR, '[name="login"]').send_keys(username)
     browser.find_element(By.CSS_SELECTOR, '[name="haslo"]').click()
@@ -90,50 +73,28 @@ def login(browser,username,password):
     browser.find_element(By.ID, "rememberme").click()
     browser.find_element(By.CSS_SELECTOR, '[name="Submit"]').click()
 
-def sign_up(video_url,title,tags):
-    browser=getSeleniumBrowserAutomation()
+def sign_up(browser):
+
     email=get_temp_email(browser)
-    title=f"** NEW ** {title}"
-    print(video_url,title)
 
     [username,password]=get_random_user_cred()
     print(username,email,password)
     sleep(2)
     
-    browser.get("https://www.xfreehd.com/")
+    browser.get("https://www.eporner.com/")
+    browser.find_element(By.CSS_SELECTOR, "#headmenu > a:nth-child(2)").click()
+    time.sleep(4)
+    browser.find_element(By.CSS_SELECTOR, "#createform > input:nth-child(4)").click()
+    browser.find_element(By.CSS_SELECTOR, "#createform > input:nth-child(4)").send_keys(username.lower())
+    browser.find_element(By.CSS_SELECTOR, "#createform-passwords > input:nth-child(3)").send_keys(password)
+    browser.find_element(By.NAME, "haslo2").send_keys(password)
+    browser.find_element(By.CSS_SELECTOR, "#createform > input:nth-child(10)").click()
+    browser.find_element(By.CSS_SELECTOR, "#createform > input:nth-child(10)").send_keys(email)
 
-    browser.find_element(By.CSS_SELECTOR, ".modal-content > .modal-footer > .btn").click()
-    browser.find_element(By.LINK_TEXT, "Sign Up").click()
-    browser.find_element(By.ID, "signup_username").click()
-    browser.find_element(By.ID, "signup_username").send_keys(username)
-    browser.find_element(By.ID, "signup_password").send_keys(password)
-    browser.find_element(By.ID, "signup_password_confirm").send_keys(password)
-    browser.find_element(By.ID, "signup_email").send_keys(email)
-    browser.find_element(By.ID, "signup_gender_male").click()
-    googleClass=browser.find_elements(By.CSS_SELECTOR,"[title=reCAPTCHA]")
-    captcha_solver=getTextToSpeechCaptchaResolver(browserWrapper=browser)
-    if len(googleClass)>0:
-        captcha_solver.resolve()
-        sleep(2)
-        browser.switch_to.parent_frame()   
-
-    browser.find_element(By.ID, "signup_age").click()
-    browser.find_element(By.ID, "signup_certify").click()
-
-    browser.find_element(By.NAME, "submit_signup").click()
-    email_activation(browser)
+    browser.execute_script('''EP.account.create.postModal();''')
     time.sleep(5)
-    login(browser,username,password)
-    upload(browser=browser,url="https://www.xfreehd.com/upload/video",video_url=video_url,title=title,tags=tags)
-    return
+    link=email_activation(email)
+    browser.get(link)
 
-
-    db=getDatabaseWrapperInstance(table_name="spankbang_account")
-    db.insert(collection="accounts",data={
-        "username":username,
-        "email":email,
-        "password":password,
-        "video":video_url,
-        "tags":tags
-    })
+    return [username,password]
 

@@ -5,8 +5,9 @@ import random
 while True:
     db=getDatabaseWrapperInstance("created_video")
     video_list=db.find_all(collection="videos")
-    data=random.choice(video_list)
-
+    rand_index=random.randint(0,len(video_list))
+    data=video_list[rand_index]
+    print(data,rand_index)
     try:
         res=requests.get(data["url"])
         with open("/tmp/tmp.mp4","wb") as video_file:
@@ -15,4 +16,3 @@ while True:
     except Exception as e:
         print(e)
 
-# sign_up(video_url="",title="",tags=["Amature","Gangbang"])

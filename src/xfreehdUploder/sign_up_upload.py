@@ -9,17 +9,12 @@ from dependency.captchaResolver.index import getTextToSpeechCaptchaResolver
 import time
 from dependency.captchaResolver.index import getTextToSpeechCaptchaResolver
 import os
+from temp_mail import get_email,get_activation_link
+
 BASE_DIR=os.path.dirname(os.path.realpath(__file__))
 
 def getRandomString(length):
     return ''.join(random.choice(ascii_letters+"1234567890") for i in range(length))
-
-def getRandomEmail():
-    faker=getFakerInstance()
-    name=faker.name()
-    name=name.replace(" ","")
-    random_string=getRandomString(4)
-    return f"{name}{random_string}@gmail.com"
 
 def getRandomUserName(length):
     return getRandomString(length)
@@ -34,6 +29,8 @@ def get_random_user_cred():
 
 def upload(browser,url,video_url,title,tags):
     try:
+        random_int=random.randint(0,100)
+        title=f"**NEW** {title} -EP{random_int}"
         print(title,tags)
         browser.get(url)
         browser.find_element(By.ID, "upload_video_title").click()
@@ -47,43 +44,25 @@ def upload(browser,url,video_url,title,tags):
         browser.find_element(By.ID, "upload_video_file").send_keys(f"{BASE_DIR}/data/tmp.mp4")
         time.sleep(2)
         browser.execute_script('''document.querySelector("#upload_video_submit").click() ''')
-        time.sleep(120)
+        time.sleep(90)
     except Exception as e:
         print(e)
 
-def get_temp_email(browser):
-    browser.get("https://mail.tm/en/")
-    time.sleep(2)
-    # captcha_solver=getTextToSpeechCaptchaResolver(browserWrapper=browser)
-    # googleClass=browser.find_elements(By.CSS_SELECTOR,"[title=reCAPTCHA]")
+def get_temp_email():
+    return get_email()
 
-    # if len(googleClass)>0:
-    #     captcha_solver.resolve()
-    #     sleep(2)
-    #     browser.switch_to.parent_frame()   
-    email=browser.execute_script(''' return document.querySelector("#DontUseWEBuseAPI").value ''')
-    return email
-
-def email_activation(browser):
+def email_activation(email):
     try:
-        browser.get("https://mail.tm/en/")
-        time.sleep(4)
-        browser.execute_script(''' document.querySelector(".divide-y a").click() ''')
-        time.sleep(4)
-        iframe=browser.find_element(By.CSS_SELECTOR,"main iframe")
-        browser.switch_to.frame(iframe)
-        time.sleep(1)
-        browser.execute_script('''document.querySelector('[href^="https://www.xfreehd.com/confirm?"]').click()''')
-        time.sleep(2)
-
-        browser.switch_to.default_content()
+        link=get_activation_link(email)
+        return link
     except Exception as e:
         print(e)
 
 def login(browser,username,password):
     browser.get("https://www.xfreehd.com/login")
     browser.set_window_size(955, 1095)
-    browser.find_element(By.CSS_SELECTOR, ".modal-content > .modal-footer > .btn").click()
+
+    browser.execute_script(''' document.querySelector(".modal-content > .modal-footer > .btn").click(); ''')
 
     browser.find_element(By.CSS_SELECTOR, ".col-lg-9 > #login_username").click()
     browser.find_element(By.CSS_SELECTOR, ".col-lg-9 > #login_username").send_keys(username)
@@ -92,11 +71,9 @@ def login(browser,username,password):
     browser.find_element(By.ID, "login_remember").click()
     browser.find_element(By.CSS_SELECTOR, ".col-lg-9 > .btn").click()
 
-def sign_up(video_url,title,tags):
-    browser=getSeleniumBrowserAutomation()
-    email=get_temp_email(browser)
-    title=f"** NEW ** {title}"
-    print(video_url,title)
+def sign_up(browser):
+    email=get_temp_email()
+
 
     [username,password]=get_random_user_cred()
     print(username,email,password)
@@ -121,21 +98,11 @@ def sign_up(video_url,title,tags):
 
     browser.find_element(By.ID, "signup_age").click()
     browser.find_element(By.ID, "signup_certify").click()
-
-    browser.find_element(By.NAME, "submit_signup").click()
-    email_activation(browser)
+    time.sleep(4)
+    browser.execute_script(''' document.querySelector('[name="submit_signup"]').click() ''')
+    link=email_activation(email)
+    browser.get(link)
     time.sleep(5)
-    login(browser,username,password)
-    upload(browser=browser,url="https://www.xfreehd.com/upload/video",video_url=video_url,title=title,tags=tags)
-    return
+    return [username,password]
 
-
-    db=getDatabaseWrapperInstance(table_name="spankbang_account")
-    db.insert(collection="accounts",data={
-        "username":username,
-        "email":email,
-        "password":password,
-        "video":video_url,
-        "tags":tags
-    })
 
