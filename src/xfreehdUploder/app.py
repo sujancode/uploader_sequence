@@ -5,7 +5,7 @@ import json
 from dependency.database.index import getDatabaseWrapperInstance
 
 
-username="soyifi1063"
+username="xipavol438"
 password="earning$$"
 
 def handler(event,context):

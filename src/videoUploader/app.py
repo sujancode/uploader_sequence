@@ -8,10 +8,11 @@ def handler(event,context):
     video_url=data["url"]
     title=data["title"]
     tags=data["tags"]
+    username=""
     res=requests.get(data["url"])
     with open("/tmp/tmp.mp4","wb") as video_file:
         video_file.write(res.content)
-    sign_up(video_url,title,tags)
+    sign_up(video_url,title,tags,username)
     return {
         "statusCode": 200,
         "headers": { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },

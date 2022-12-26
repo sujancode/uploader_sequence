@@ -5,5 +5,5 @@ do
     
 done
 
-# sam build
-# sam deploy
+sam build
+sam deploy

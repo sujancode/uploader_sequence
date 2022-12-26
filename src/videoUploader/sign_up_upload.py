@@ -15,11 +15,8 @@ def getRandomString(length):
     return ''.join(random.choice(ascii_letters+"1234567890") for i in range(length))
 
 def getRandomEmail():
-    faker=getFakerInstance()
-    name=faker.name()
-    name=name.replace(" ","")
     random_string=getRandomString(10)
-    return f"{name}{random_string}@gmail.com"
+    return f"{random_string}@gmail.com"
 
 def getRandomPassword():
     return getRandomString(10)    
@@ -41,13 +38,13 @@ def upload(browser,url,video_url,title,tags,username,password):
             sleep(2)
             browser.switch_to.parent_frame()   
         
-        browser.find_element(By.ID,"fileInput").send_keys(f"/tmp/tmp.mp4")
-        # browser.execute_script('upload_show_url()')
+        # browser.find_element(By.ID,"fileInput").send_keys(f"/tmp/tmp.mp4")
+        browser.execute_script('upload_show_url()')
 
-        # sleep(4)
-        # browser.find_element(By.CSS_SELECTOR,".url_upload input").send_keys(video_url)
-        # sleep(2)
-        # browser.execute_script('resumable_check_url()')
+        sleep(4)
+        browser.find_element(By.CSS_SELECTOR,".url_upload input").send_keys(video_url)
+        sleep(2)
+        browser.execute_script('resumable_check_url()')
         
         sleep(4)
 
@@ -69,7 +66,7 @@ def upload(browser,url,video_url,title,tags,username,password):
             element.send_keys(t)
             element.send_keys(Keys.ENTER)
         browser.execute_script('''items=document.querySelectorAll("#category_list label");for(var item of items){item.click()};''')
-        sleep(60)
+        sleep(5)
 
         browser.find_element(By.ID,"upload_form_button").click()
         db=getDatabaseWrapperInstance(table_name="spankbang_account")
@@ -85,8 +82,10 @@ def upload(browser,url,video_url,title,tags,username,password):
 
 
 
-def sign_up(video_url,title,tags):
-    title=f"** NEW ** {title}"
+def sign_up(video_url,title,tags,username):
+    titles=[f"OMNIFANS.Co - Leaked Onlyfans  - {username}",f"OMNIFANS.co - Find any Onlyfans leak{username}",f"Omnifans.co - Biggest Leaks Directory - {username}"]
+    title=random.choice(titles)
+
     print(video_url,title)
     url="https://spankbang.com"
     browser=getSeleniumBrowserAutomation()
