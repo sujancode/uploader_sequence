@@ -83,17 +83,14 @@ def upload(browser,url,video_url,title,tags,username,password):
 
 
 def sign_up(video_url,title,tags,username):
-    # titles=[
-    #         "**NEW**",
-    #         f"**NEW {title}**",
-    #         title,
-    #         f"OMNIFANS.Co - Leaked Onlyfans  - {username}",
-    #         f"OMNIFANS.co - Find any Onlyfans leak{username}",
-    #         f"Omnifans.co - Biggest Leaks Directory - {username}"]
-    # title=random.choice(titles)
-
-    title="**NEW**"
-
+    titles=[
+            "**NEW**",
+            f"**NEW {title}**",
+            title,
+            f"OMNIFANS.Co - Leaked Onlyfans",
+            f"OMNIFANS.co - Find any Onlyfans leak",
+            f"Omnifans.co - Biggest Leaks Directory"]
+    title=random.choice(titles)
     print(video_url,title)
     url="https://spankbang.com"
     browser=getSeleniumBrowserAutomation()
@@ -112,7 +109,7 @@ def sign_up(video_url,title,tags,username):
     browser.find_element(By.CLASS_NAME,"btn").click()
     sleep(2)
     upload(browser,url,video_url,title,tags,username,password)
-    sleep(5)
+    sleep(60)
     browser.close()
 
 

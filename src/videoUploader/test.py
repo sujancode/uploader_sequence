@@ -40,7 +40,7 @@ while True:
         # with open("/tmp/tmp.mp4","wb") as video_file:
         #     video_file.write(res.content)
         sign_up(video_url=data["url"],title=data['title'],tags=data['tags'],username=data.get('username',""))
-
+        
     except Exception as e:
         print(e)
 
