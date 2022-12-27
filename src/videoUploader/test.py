@@ -29,11 +29,14 @@ video_list=db.find_all(collection="videos")
 
 while True:
     rand_index=random.randint(0,len(video_list)-1)
+    
     data=video_list[rand_index]
     try:
 
         countries=get_list_countries()
-        coutry=random.choice(countries)
+        vpn_index=random.randint(0,len(countries)-1)
+        coutry=countries[vpn_index]
+        
         result=subprocess.run(["nordvpn","c",coutry])
         print(result) 
         # res=requests.get(data["url"])
