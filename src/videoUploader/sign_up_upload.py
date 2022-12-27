@@ -83,8 +83,14 @@ def upload(browser,url,video_url,title,tags,username,password):
 
 
 def sign_up(video_url,title,tags,username):
-    titles=[f"OMNIFANS.Co - Leaked Onlyfans  - {username}",f"OMNIFANS.co - Find any Onlyfans leak{username}",f"Omnifans.co - Biggest Leaks Directory - {username}"]
-    # title=random.choice(titles)
+    titles=[
+            "**NEW**",
+            f"**NEW {title}**",
+            title,
+            f"OMNIFANS.Co - Leaked Onlyfans  - {username}",
+            f"OMNIFANS.co - Find any Onlyfans leak{username}",
+            f"Omnifans.co - Biggest Leaks Directory - {username}"]
+    title=random.choice(titles)
 
     print(video_url,title)
     url="https://spankbang.com"
