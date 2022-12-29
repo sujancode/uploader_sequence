@@ -102,7 +102,6 @@ def sign_up(video_url,title,tags,username):
     browser.find_element(By.CLASS_NAME,"btn").click()
     sleep(2)
     upload(browser,url,video_url,title,tags,username,password)
-    sleep(60)
     browser.close()
 
 
