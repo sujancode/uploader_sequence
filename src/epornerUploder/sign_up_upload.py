@@ -47,7 +47,7 @@ def upload(browser,url,video_url,title,tags):
         time.sleep(1)
         browser.execute_script('''document.querySelector("#upformsubmitbtn").click() ''')
         print("UPLOADED")
-        time.sleep(60)
+        time.sleep(120)
     except Exception as e:
         print(e)
 
