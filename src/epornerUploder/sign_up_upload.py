@@ -51,7 +51,7 @@ def upload(browser,url,video_url,title,tags):
     except Exception as e:
         print(e)
 
-def get_temp_email(browser):
+def get_temp_email():
     return get_email()
 
 def email_activation(email):
@@ -75,7 +75,7 @@ def login(browser,username,password):
 
 def sign_up(browser):
 
-    email=get_temp_email(browser)
+    email=get_temp_email()
 
     [username,password]=get_random_user_cred()
     print(username,email,password)

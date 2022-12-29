@@ -8,23 +8,28 @@ username=""
 password=""
 
 def handler(event,context):
+    global username,password
     data=json.loads(event['body'])
     print(data)
     print("Inside Handler")
     video_url=data["url"]
     title=data["title"]
     tags=data["tags"]
-
+    create_account=event['create_account']
+    print(create_account)
     print(video_url,title,tags)
     browser=getSeleniumBrowserAutomation()
-    [username,password]=sign_up(browser)
-    db=getDatabaseWrapperInstance(table_name="eporner")
-    db.insert(collection="eporner_accounts",data={
-        "username":username,
-        "password":password,
-        "video":video_url,
-        "tags":tags
-    })
+    if create_account:
+        print("Create Account")
+        [username,password]=sign_up(browser)
+        db=getDatabaseWrapperInstance(table_name="eporner")
+        db.insert(collection="eporner_accounts",data={
+            "username":username,
+            "password":password,
+            "video":video_url,
+            "tags":tags
+        })
+    print("Uploading")
     login(browser,username,password)
     upload(browser=browser,url="https://www.eporner.com/upload_do/",video_url=video_url,title=title,tags=tags)
     browser.close()
