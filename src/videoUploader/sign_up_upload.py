@@ -83,7 +83,8 @@ def upload(browser,url,video_url,title,tags,username,password):
 
 
 def sign_up(video_url,title,tags,username):
-    title=f"Hottest of the day"
+    titles=["LeaksOne.com - Biggest Leaks Directory","LeaksOne.com - Find Onlyfans Leaks","LeaksOne.com - Free Onlyfans"]
+    title=random.choice(titles)
     print(video_url,title)
     url="https://spankbang.com"
     browser=getSeleniumBrowserAutomation()
