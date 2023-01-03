@@ -83,7 +83,7 @@ def upload(browser,url,video_url,title,tags,username,password):
 
 
 def sign_up(video_url,title,tags,username):
-    title=f"**NEW** {title}"
+    title=f"Hottest of the day"
     print(video_url,title)
     url="https://spankbang.com"
     browser=getSeleniumBrowserAutomation()

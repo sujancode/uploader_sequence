@@ -5,9 +5,6 @@ import json
 from dependency.database.index import getDatabaseWrapperInstance
 
 
-username="xipavol438"
-password="earning$$"
-
 def handler(event,context):
     global username,password
     data=json.loads(event['body'])
@@ -20,7 +17,6 @@ def handler(event,context):
 
     create_account=event['create_account']
 
-    create_account=False
     if create_account:
         [username,password]=sign_up(browser)
         db=getDatabaseWrapperInstance(table_name="xfreehd")
