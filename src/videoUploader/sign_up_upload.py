@@ -38,7 +38,7 @@ def upload(browser,url,video_url,title,tags,username,password):
             sleep(2)
             browser.switch_to.parent_frame()   
         
-        browser.find_element(By.ID,"fileInput").send_keys(f"/tmp/tmp.mp4")
+        browser.find_element(By.ID,"fileInput").send_keys(f"./tmp/tmp.mp4")
         # browser.execute_script('upload_show_url()')
 
         # sleep(4)
