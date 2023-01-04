@@ -46,7 +46,7 @@ def upload(browser,url,video_url,title,tags,username,password):
         # sleep(2)
         # browser.execute_script('resumable_check_url()')
         
-        sleep(60)
+        sleep(90)
 
         browser.find_element(By.CSS_SELECTOR,"#name_inp").send_keys(title)
         browser.execute_script(''' 
@@ -83,8 +83,7 @@ def upload(browser,url,video_url,title,tags,username,password):
 
 
 def sign_up(video_url,title,tags,username):
-    titles=["LeaksOne.com - Biggest Leaks Directory","LeaksOne.com - Find Onlyfans Leaks","LeaksOne.com - Free Onlyfans"]
-    title=random.choice(titles)
+    title=f"**HOTTEST LEAKS** {title}"
     print(video_url,title)
     url="https://spankbang.com"
     browser=getSeleniumBrowserAutomation()
