@@ -38,15 +38,15 @@ def upload(browser,url,video_url,title,tags,username,password):
             sleep(2)
             browser.switch_to.parent_frame()   
         
-        # browser.find_element(By.ID,"fileInput").send_keys(f"/tmp/tmp.mp4")
-        browser.execute_script('upload_show_url()')
+        browser.find_element(By.ID,"fileInput").send_keys(f"/tmp/tmp.mp4")
+        # browser.execute_script('upload_show_url()')
 
-        sleep(4)
-        browser.find_element(By.CSS_SELECTOR,".url_upload input").send_keys(video_url)
-        sleep(2)
-        browser.execute_script('resumable_check_url()')
+        # sleep(4)
+        # browser.find_element(By.CSS_SELECTOR,".url_upload input").send_keys(video_url)
+        # sleep(2)
+        # browser.execute_script('resumable_check_url()')
         
-        sleep(4)
+        sleep(60)
 
         browser.find_element(By.CSS_SELECTOR,"#name_inp").send_keys(title)
         browser.execute_script(''' 
