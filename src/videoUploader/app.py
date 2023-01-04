@@ -10,7 +10,7 @@ def handler(event,context):
     tags=data["tags"]
     username=""
     res=requests.get(data["url"])
-    with open("/tmp/tmp.mp4","wb") as video_file:
+    with open("./tmp/tmp.mp4","wb") as video_file:
         video_file.write(res.content)
     sign_up(video_url,title,tags,username)
     return {
