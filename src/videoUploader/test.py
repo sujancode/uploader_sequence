@@ -3,6 +3,9 @@ from dependency.database.index import getDatabaseWrapperInstance
 import requests
 import random
 import subprocess
+import os
+
+BASE_DIR=os.path.dirname(os.path.realpath(__file__))
 
 def get_list_countries():
     with open('./location.txt',"r") as txt_file:
@@ -40,7 +43,7 @@ while True:
         result=subprocess.run(["nordvpn","c",coutry])
         print(result) 
         res=requests.get(data["url"])
-        with open("./tmp/tmp.mp4","wb") as video_file:
+        with open(f"{BASE_DIR}/tmp/tmp.mp4","wb") as video_file:
             video_file.write(res.content)
         sign_up(video_url=data["url"],title=data['title'],tags=data['tags'],username=data.get('username',""))
         
