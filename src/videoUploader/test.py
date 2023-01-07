@@ -18,13 +18,15 @@ video_list=db.find_all(collection="videos")
 # for index in range(0,len(video_list)):
 #     try:
 #         data=video_list[index]
+        
 #         countries=get_list_countries()
 #         coutry=random.choice(countries)
 #         result=subprocess.run(["nordvpn","c",coutry])
 #         print(result) 
-#         # res=requests.get(data["url"])
-#         # with open("/tmp/tmp.mp4","wb") as video_file:
-#         #     video_file.write(res.content)
+
+#         res=requests.get(data["url"])
+#         with open("./tmp/tmp.mp4","wb") as video_file:
+#             video_file.write(res.content)
 #         sign_up(video_url=data["url"],title=data['title'],tags=data['tags'],username=data.get('username',""))
 
 #     except Exception as e:
@@ -34,14 +36,11 @@ while True:
     rand_index=random.randint(0,len(video_list)-1)
     
     data=video_list[rand_index]
+    countries=get_list_countries()
+    coutry=random.choice(countries)
+    result=subprocess.run(["nordvpn","c",coutry])
+    print(result) 
     try:
-
-        countries=get_list_countries()
-        vpn_index=random.randint(0,len(countries)-1)
-        coutry=countries[vpn_index]
-        
-        result=subprocess.run(["nordvpn","c",coutry])
-        print(result) 
         res=requests.get(data["url"])
         with open(f"{BASE_DIR}/tmp/tmp.mp4","wb") as video_file:
             video_file.write(res.content)

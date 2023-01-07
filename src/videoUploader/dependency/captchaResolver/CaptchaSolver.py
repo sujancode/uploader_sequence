@@ -2,8 +2,15 @@ import os
 import time
 from selenium.webdriver.common.by import By
 from .speechToText import get_large_audio_transcription
+import random 
+import subprocess
 
-BASE_DIR="/tmp"
+BASE_DIR="./tmp"
+
+def get_list_countries():
+    with open('./location.txt',"r") as txt_file:
+        countries=txt_file.read().split(",")
+        return countries
 
 class CaptchaSolver:
     def __init__(self,browserWrapper,requests):

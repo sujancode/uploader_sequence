@@ -25,7 +25,7 @@ def getRandomPassword():
 def get_random_user_cred():
     email=getRandomEmail()
     username=email.split("@")[0]
-    return ["tag_"+username,email,getRandomPassword()]
+    return [username,email,getRandomPassword()]
 
 def upload(browser,url,video_url,title,tags,username,password):
     try:
@@ -36,7 +36,8 @@ def upload(browser,url,video_url,title,tags,username,password):
         if len(googleClass)>0:
             captcha_solver.resolve()
             sleep(2)
-            browser.switch_to.parent_frame()   
+        
+        browser.switch_to.parent_frame()   
         
         browser.find_element(By.ID,"fileInput").send_keys(f"{BASE_DIR}/tmp/tmp.mp4")
         # browser.execute_script('upload_show_url()')
@@ -46,7 +47,6 @@ def upload(browser,url,video_url,title,tags,username,password):
         # sleep(2)
         # browser.execute_script('resumable_check_url()')
         
-        sleep(60)
 
         browser.find_element(By.CSS_SELECTOR,"#name_inp").send_keys(title)
         browser.execute_script(''' 
@@ -57,8 +57,9 @@ def upload(browser,url,video_url,title,tags,username,password):
         browser_tags=browser.execute_script('''
                 return document.querySelector("#category_list").innerText;
             ''')
-        tags=["Big Tits","Big Ass","Blowjob","Pov","Onlyfans","Amature","interracial","Babe"]
-            
+        if not tags:
+            tags=browser_tags.split("\n")
+
         for t in tags:
             element=browser.find_element(By.CSS_SELECTOR,"#tag_inp input")
             element.send_keys(t)
@@ -66,7 +67,17 @@ def upload(browser,url,video_url,title,tags,username,password):
         browser.execute_script('''items=document.querySelectorAll("#category_list label");for(var item of items){item.click()};''')
         sleep(5)
 
+        
+        upload_complete=browser.execute_script("return upload_is_completed")
+        print(upload_complete)
+        while not upload_complete:
+            sleep(5)
+            upload_complete=browser.execute_script("return upload_is_completed")
+
         browser.find_element(By.ID,"upload_form_button").click()
+
+        sleep(5)
+
         db=getDatabaseWrapperInstance(table_name="spankbang_account")
         db.insert(collection="accounts",data={
             "username":username,
@@ -83,7 +94,7 @@ def upload(browser,url,video_url,title,tags,username,password):
 def sign_up(video_url,title,tags,username):
     # titles=["LeaksOne.com - Biggest Leaks Directory","LeaksOne.com - Find Onlyfans Leaks","LeaksOne.com - Free Onlyfans"]
 
-    title=f"**New Onlyfans**{title}"
+    title=f"**New {title} **"
     # title=random.choice(titles)
     print(video_url,title)
     url="https://spankbang.com"
