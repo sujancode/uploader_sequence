@@ -76,8 +76,9 @@ def upload(browser,url,video_url,title,tags,username,password):
                 sleep(5)
                 upload_complete=browser.execute_script("return upload_is_completed")
             except Exception as e:
-                print(e)
-                
+                print(e)                
+        #this line is probably diffrent
+        
         browser.find_element(By.ID,"upload_form_button").click()
         sleep(2)
         db=getDatabaseWrapperInstance(table_name="spankbang_account")
