@@ -68,14 +68,16 @@ def upload(browser,url,video_url,title,tags,username,password):
         sleep(5)
 
         
+
+
+        browser.find_element(By.ID,"upload_form_button").click()
+
         upload_complete=browser.execute_script("return upload_is_completed")
         print(upload_complete)
         while not upload_complete:
             sleep(5)
             upload_complete=browser.execute_script("return upload_is_completed")
-
-        browser.find_element(By.ID,"upload_form_button").click()
-
+            
         sleep(5)
 
         db=getDatabaseWrapperInstance(table_name="spankbang_account")
