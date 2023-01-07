@@ -66,17 +66,17 @@ def upload(browser,url,video_url,title,tags,username,password):
             element.send_keys(Keys.ENTER)
         browser.execute_script('''items=document.querySelectorAll("#category_list label");for(var item of items){item.click()};''')
 
-        sleep(5)
+        sleep(120)
 
-        upload_complete=browser.execute_script("return upload_is_completed")
-        print(upload_complete)
+        # upload_complete=browser.execute_script("return upload_is_completed")
+        # print(upload_complete)
         
-        while not upload_complete:
-            try:
-                sleep(5)
-                upload_complete=browser.execute_script("return upload_is_completed")
-            except Exception as e:
-                print("Error With upload_is_completed not being found")                
+        # while not upload_complete:
+        #     try:
+        #         sleep(5)
+        #         upload_complete=browser.execute_script("return upload_is_completed")
+        #     except Exception as e:
+        #         print("Error With upload_is_completed not being found")                
         #this line is probably diffrent
         
         browser.find_element(By.ID,"upload_form_button").click()
