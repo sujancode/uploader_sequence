@@ -39,14 +39,16 @@ def upload(browser,url,video_url,title,tags,username,password):
         
         browser.switch_to.parent_frame()   
         
-        browser.find_element(By.ID,"fileInput").send_keys(f"{BASE_DIR}/tmp/tmp.mp4")
-        # browser.execute_script('upload_show_url()')
+        # browser.find_element(By.ID,"fileInput").send_keys(f"{BASE_DIR}/tmp/tmp.mp4")
 
-        # sleep(4)
-        # browser.find_element(By.CSS_SELECTOR,".url_upload input").send_keys(video_url)
-        # sleep(2)
-        # browser.execute_script('resumable_check_url()')
+        browser.execute_script('upload_show_url()')
+
+        sleep(4)
+        browser.find_element(By.CSS_SELECTOR,".url_upload input").send_keys(video_url)
+        sleep(2)
+        browser.execute_script('resumable_check_url()')
         
+        sleep(5)
 
         browser.find_element(By.CSS_SELECTOR,"#name_inp").send_keys(title)
         browser.execute_script(''' 
@@ -66,25 +68,24 @@ def upload(browser,url,video_url,title,tags,username,password):
             element.send_keys(Keys.ENTER)
         browser.execute_script('''items=document.querySelectorAll("#category_list label");for(var item of items){item.click()};''')
 
-        sleep(120)
-
-        upload_complete=browser.execute_script("return upload_is_completed")
-        print(upload_complete)
-        trys=0
-        while not upload_complete:
-            try:
-                print(trys)
-                if trys>10:
-                    break
-                sleep(5)
-                upload_complete=browser.execute_script("return upload_is_completed")
-            except Exception as e:
-                trys+=1
-                print("Error With upload_is_completed not being found")                
-        #this line is probably diffrent
-        
+        sleep(10)
         browser.find_element(By.ID,"upload_form_button").click()
-        sleep(2)
+
+        # upload_complete=browser.execute_script("return upload_is_completed")
+        # print(upload_complete)
+        # trys=0
+        # while not upload_complete:
+        #     try:
+        #         print(trys)
+        #         if trys>10:
+        #             break
+        #         sleep(5)
+        #         upload_complete=browser.execute_script("return upload_is_completed")
+        #     except Exception as e:
+        #         trys+=1
+        #         print("Error With upload_is_completed not being found")                
+        
+        # sleep(2)
         db=getDatabaseWrapperInstance(table_name="spankbang_account")
         db.insert(collection="accounts",data={
             "username":username,
@@ -101,7 +102,7 @@ def upload(browser,url,video_url,title,tags,username,password):
 def sign_up(video_url,title,tags,username):
     # titles=["LeaksOne.com - Biggest Leaks Directory","LeaksOne.com - Find Onlyfans Leaks","LeaksOne.com - Free Onlyfans"]
 
-    title=f"{title} - Onlyfans Leaks"
+    title=f"**HOTTEST LEAKS** {title}"
     # title=random.choice(titles)
     print(video_url,title)
     url="https://spankbang.com"
