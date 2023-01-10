@@ -40,7 +40,7 @@ while True:
     data=video_list[rand_index]
     countries=get_list_countries()
     coutry=random.choice(countries)
-    result=subprocess.run(["nordvpn","c","united_states"])
+    result=subprocess.run(["nordvpn","c",coutry])
 
     print(result) 
 
