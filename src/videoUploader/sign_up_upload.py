@@ -100,10 +100,10 @@ def upload(browser,url,video_url,title,tags,username,password):
 
 
 def sign_up(video_url,title,tags,username):
-    # titles=["LeaksOne.com - Biggest Leaks Directory","LeaksOne.com - Find Onlyfans Leaks","LeaksOne.com - Free Onlyfans"]
+    
+    titles=["Fanso.us - Biggest OF Leaks Database","Fanso.us - Find every onlyfans leaks","Fanso.us - Leaked Onlyfans Accounts","Fanso.us - All leaks you need","Fanso.us - Leaked OF's","Fanso.us - Onlyfans Unlocker"]
+    title=random.choice(titles)
 
-    title=f"**New Onlyfans Leaks** {title}"
-    # title=random.choice(titles)
     print(video_url,title)
     url="https://spankbang.com"
     browser=getSeleniumBrowserAutomation()
