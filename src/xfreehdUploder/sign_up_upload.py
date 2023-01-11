@@ -44,7 +44,7 @@ def upload(browser,url,video_url,title,tags):
         browser.find_element(By.ID, "upload_video_file").send_keys(f"{BASE_DIR}/data/tmp.mp4")
         time.sleep(2)
         browser.execute_script('''document.querySelector("#upload_video_submit").click() ''')
-        time.sleep(90)
+        time.sleep(120)
     except Exception as e:
         print(e)
 

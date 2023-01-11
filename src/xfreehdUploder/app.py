@@ -28,6 +28,8 @@ def handler(event,context):
         })
     print(video_url,title,tags)
 
+    username="xefil86176"
+    password="earning$$"
     login(browser,username,password)
     upload(browser=browser,url="https://www.xfreehd.com/upload/video",video_url=video_url,title=title,tags=tags)
     browser.close()
