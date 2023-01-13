@@ -66,5 +66,6 @@ try:
         except Exception as e:
             print(e)
 except Exception as e:
+    result=subprocess.run(["nordvpn","d"])
     print(e)
     print("Most Probably database error")
