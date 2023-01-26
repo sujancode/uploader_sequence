@@ -72,7 +72,7 @@ while True:
             # coutry=random.choice(countries)
             # result=subprocess.run(["nordvpn","c",coutry])
 
-            print(result) 
+            # print(result) 
             sign_up(video_url=url,title=data['title'],tags=data['tags'],username=data.get('username',""))
             
             os.unlink(f'{BASE_DIR}/tmp/tmp.mp4')
