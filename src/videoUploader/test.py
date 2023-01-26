@@ -33,8 +33,8 @@ db=getDatabaseWrapperInstance("created_video")
 #     except Exception as e:
 #         print(e)
 
-try:
-    while True:
+while True:
+    try:
         video_list=db.find_all(collection="videos")
         rand_index=random.randint(0,len(video_list)-1)
         print(rand_index)
@@ -66,7 +66,7 @@ try:
             os.unlink(f'{BASE_DIR}/tmp/tmp.mp4')
         except Exception as e:
             print(e)
-except Exception as e:
-    result=subprocess.run(["nordvpn","d"])
-    print(e)
-    print("Most Probably database error")
+    except Exception as e:
+        result=subprocess.run(["nordvpn","d"])
+        print(e)
+        print("Most Probably database error")
