@@ -6,6 +6,7 @@ import subprocess
 import os
 from dependency.storage_bucket.index import getS3StorageInstance
 import urllib
+import youtube_dl
 
 BASE_DIR=os.path.dirname(os.path.realpath(__file__))
 
@@ -43,13 +44,23 @@ while True:
         # result=subprocess.run(["nordvpn","d"])
 
         try:
+            ydl_opts = {
+                'format': 'best',
+                'outtmpl': f"{BASE_DIR}/tmp/tmp.mp4",
+                'nooverwrites': True,
+                'no_warnings': False,
+                'ignoreerrors': True,
+            }
+
             filename=data["url"].split("/")[-1]
             filename=filename.replace("+","")
             print(data['url'])
             print(filename)
-            res=requests.get(data["url"])
-            with open(f"{BASE_DIR}/tmp/tmp.mp4","wb") as video_file:
-                video_file.write(res.content)
+            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([data["url"]])   
+            # res=requests.get(data["url"])
+            # with open(f"{BASE_DIR}/tmp/tmp.mp4","wb") as video_file:
+            #     video_file.write(res.content)
             
             bucket_name="new-data-source"
             url=f"https://{bucket_name}.s3.amazonaws.com/{filename}"
