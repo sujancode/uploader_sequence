@@ -63,6 +63,7 @@ try:
             print(result) 
             sign_up(video_url=url,title=data['title'],tags=data['tags'],username=data.get('username',""))
             
+            os.unlink(f'{BASE_DIR}/tmp/tmp.mp4')
         except Exception as e:
             print(e)
 except Exception as e:
