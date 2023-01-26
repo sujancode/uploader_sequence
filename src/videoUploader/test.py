@@ -40,12 +40,13 @@ while True:
         print(rand_index)
         data=video_list[rand_index]
 
-        result=subprocess.run(["nordvpn","d"])
+        # result=subprocess.run(["nordvpn","d"])
 
         try:
             filename=data["url"].split("/")[-1]
             filename=filename.replace("+","")
-
+            print(data['url'])
+            print(filename)
             res=requests.get(data["url"])
             with open(f"{BASE_DIR}/tmp/tmp.mp4","wb") as video_file:
                 video_file.write(res.content)
@@ -56,11 +57,11 @@ while True:
             storage_bucket=getS3StorageInstance()
             storage_bucket.upload_file(path=f'{BASE_DIR}/tmp/tmp.mp4',bucket_name=bucket_name,upload_location=filename)
 
-            countries=get_list_countries()
-            coutry=random.choice(countries)
-            result=subprocess.run(["nordvpn","c",coutry])
+            # countries=get_list_countries()
+            # coutry=random.choice(countries)
+            # result=subprocess.run(["nordvpn","c",coutry])
 
-            print(result) 
+            # print(result) 
             sign_up(video_url=url,title=data['title'],tags=data['tags'],username=data.get('username',""))
             
             os.unlink(f'{BASE_DIR}/tmp/tmp.mp4')
