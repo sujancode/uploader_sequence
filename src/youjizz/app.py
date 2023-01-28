@@ -7,6 +7,7 @@ BASE_DIR=os.path.dirname(os.path.realpath(__file__))
 
 def upload(browser,title,tags):
     try:
+        print("uploding")
         browser.get("https://www.youjizz.com/profile/upload")
         sleep(5)
         browser.find_element(By.ID,"inputFileUpload").send_keys(f"{BASE_DIR}/tmp/tmp.mp4")
@@ -14,10 +15,13 @@ def upload(browser,title,tags):
         browser.find_element(By.CSS_SELECTOR,'''[data-ng-model="file.title"]''').send_keys(title)
         browser.find_element(By.CSS_SELECTOR,'''[data-ng-model="file.keywords"]''').send_keys(','.join(tags))
         browser.execute_script('''document.querySelector(".upload_video_button").click()''')
-    except:
-        pass
+        print("Uploade")
+
+    except Exception as e:
+        print(e)
 
 def login(browser):
+    print("Logging In")
     username="bangobros69"
     password="earning$$"
 
@@ -33,6 +37,9 @@ def login(browser):
 def handler(event,context):
     title=event["title"]
     tags=event["tags"]
+    print(title)
+    print(tags)
+
     browser=getSeleniumBrowserAutomation()
     login(browser)
     upload(browser,title,tags)
