@@ -1,15 +1,15 @@
-from dependency.selenium.Selenium import getSeleniumBrowserAutomation
+from videoUploader.dependency.selenium.Selenium import getSeleniumBrowserAutomation
 from time import sleep
 from selenium.webdriver.common.keys import Keys
 
 from selenium.webdriver.common.by import By
 from string import ascii_letters
 import random
-from dependency.faker.Faker import getFakerInstance
-from dependency.database.index import getDatabaseWrapperInstance
-from dependency.captchaResolver.index import getTextToSpeechCaptchaResolver
+from videoUploader.dependency.database.index import getDatabaseWrapperInstance
+from videoUploader.dependency.captchaResolver.index import getTextToSpeechCaptchaResolver
 import os
-BASE_DIR=os.path.dirname(os.path.realpath(__file__))
+
+BASE_DIR=os.getcwd()
 
 def getRandomString(length):
     return ''.join(random.choice(ascii_letters+"1234567890") for i in range(length))
@@ -39,14 +39,13 @@ def upload(browser,url,video_url,title,tags,username,password):
         
         browser.switch_to.parent_frame()   
         
-        # browser.find_element(By.ID,"fileInput").send_keys(f"{BASE_DIR}/tmp/tmp.mp4")
+        browser.find_element(By.ID,"fileInput").send_keys(f"{BASE_DIR}/tmp/tmp.mp4")
 
-        browser.execute_script('upload_show_url()')
-
-        sleep(4)
-        browser.find_element(By.CSS_SELECTOR,".url_upload input").send_keys(video_url)
-        sleep(2)
-        browser.execute_script('resumable_check_url()')
+        # browser.execute_script('upload_show_url()')
+        # sleep(4)
+        # browser.find_element(By.CSS_SELECTOR,".url_upload input").send_keys(video_url)
+        # sleep(2)
+        # browser.execute_script('resumable_check_url()')
         
         sleep(5)
 
@@ -71,9 +70,9 @@ def upload(browser,url,video_url,title,tags,username,password):
         sleep(10)
         browser.find_element(By.ID,"upload_form_button").click()
 
-        # upload_complete=browser.execute_script("return upload_is_completed")
-        # print(upload_complete)
-        # trys=0
+        upload_complete=browser.execute_script("return upload_is_completed")
+        print(upload_complete)
+        sleep(10)
         # while not upload_complete:
         #     try:
         #         print(trys)
@@ -85,7 +84,8 @@ def upload(browser,url,video_url,title,tags,username,password):
         #         trys+=1
         #         print("Error With upload_is_completed not being found")                
         
-        # sleep(2)
+        sleep(300)
+        
         db=getDatabaseWrapperInstance(table_name="spankbang_account")
         db.insert(collection="accounts",data={
             "username":username,
@@ -122,6 +122,5 @@ def sign_up(video_url,title,tags,username):
     browser.find_element(By.CLASS_NAME,"btn").click()
     sleep(2)
     upload(browser,url,video_url,title,tags,username,password)
+
     browser.close()
-
-

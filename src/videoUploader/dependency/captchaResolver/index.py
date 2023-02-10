@@ -1,6 +1,6 @@
 
 from .CaptchaSolver import CaptchaSolver
-from dependency.selenium.Selenium import getSeleniumBrowserAutomation
+from videoUploader.dependency.selenium.Selenium import getSeleniumBrowserAutomation
 import requests
  
 def getTextToSpeechCaptchaResolver(browserWrapper)-> CaptchaSolver:

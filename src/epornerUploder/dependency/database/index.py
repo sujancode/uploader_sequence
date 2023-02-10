@@ -1,6 +1,6 @@
 import pymongo
 
-from dependency.database.database import DatabaseWrapper
+from epornerUploder.dependency.database.database import DatabaseWrapper
 import bson
 DATABASE_WRAPPER_INSTANCE=None
 

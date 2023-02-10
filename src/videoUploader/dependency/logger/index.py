@@ -1,6 +1,6 @@
 
-from dependency.database.index import getDatabaseWrapperInstance
-from dependency.logger.logger import Logger
+from videoUploader.dependency.database.index import getDatabaseWrapperInstance
+from videoUploader.dependency.logger.logger import Logger
 
 def getLoggerInstance(instance):
     db=getDatabaseWrapperInstance()

@@ -1,8 +1,8 @@
-from sign_up_upload import login,upload,sign_up
-from dependency.selenium.Selenium import getSeleniumBrowserAutomation
+from epornerUploder.sign_up_upload import login,upload,sign_up
+from epornerUploder.dependency.selenium.Selenium import getSeleniumBrowserAutomation
 import time
 import json
-from dependency.database.index import getDatabaseWrapperInstance
+from epornerUploder.dependency.database.index import getDatabaseWrapperInstance
 
 username=""
 password=""
@@ -32,7 +32,6 @@ def handler(event,context):
     print("Uploading")
     login(browser,username,password)
     upload(browser=browser,url="https://www.eporner.com/upload_do/",video_url=video_url,title=title,tags=tags)
-    browser.close()
     return {
         "statusCode": 200,
         "headers": { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },

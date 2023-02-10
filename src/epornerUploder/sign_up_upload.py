@@ -1,15 +1,14 @@
-from dependency.selenium.Selenium import getSeleniumBrowserAutomation
 from time import sleep
 from selenium.webdriver.common.by import By
 from string import ascii_letters
 import random
-from dependency.faker.Faker import getFakerInstance
+from epornerUploder.dependency.faker.Faker import getFakerInstance
 import time
 import os
 from selenium.webdriver.common.keys import Keys
-from temp_mail import get_activation_link,get_email
+from epornerUploder.temp_mail import get_activation_link,get_email
 
-BASE_DIR=os.path.dirname(os.path.realpath(__file__))
+BASE_DIR=os.getcwd()
 
 def getRandomString(length):
     return ''.join(random.choice(ascii_letters) for i in range(length))
@@ -41,13 +40,14 @@ def upload(browser,url,video_url,title,tags):
 
         browser.execute_script(''' items=document.querySelectorAll(".uptabcatinp input");for(var i=0;i<items.length;i++){if(i>4)break;items[i].click()}''')
         
-        browser.find_element(By.CSS_SELECTOR, '[type="file"]').send_keys(f"{BASE_DIR}/data/tmp.mp4")
+        browser.find_element(By.CSS_SELECTOR, '[type="file"]').send_keys(f"{BASE_DIR}/tmp/tmp.mp4")
         time.sleep(2)
         browser.execute_script(''' document.querySelector("#typehome").click()''')
         time.sleep(1)
         browser.execute_script('''document.querySelector("#upformsubmitbtn").click() ''')
         print("UPLOADED")
-        time.sleep(120)
+        
+        time.sleep(300)
     except Exception as e:
         print(e)
 

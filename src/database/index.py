@@ -1,5 +1,6 @@
 import pymongo
-from youjizz.dependency.database.database import DatabaseWrapper
+
+from database.database import DatabaseWrapper
 import bson
 DATABASE_WRAPPER_INSTANCE=None
 
